@@ -8,71 +8,171 @@
   <!-- Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-  <style>
-    body {
-      font-family: Inter, Arial, sans-serif;
-      background: #f3f4f6;
-      margin: 0;
-      padding: 20px;
-      color: #0b2740;
-    }
-    .wrap {
-      max-width: 680px;
-      margin: auto;
-      background: #fff;
-      border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 8px 30px rgba(11,39,64,0.06);
-    }
-    #messages {
-      max-height: 420px;
-      overflow-y: auto;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      border: 1px solid #eef2f6;
-      border-radius: 8px;
-    }
-    .msg {
-      padding: 12px 14px;
-      border-radius: 12px;
-      max-width: 80%;
-      line-height: 1.45;
-    }
-    .user {
-      align-self: flex-end;
-      background: #d1eaff;
-    }
-    .bot {
-      align-self: flex-start;
-      background: #eef2f7;
-    }
-    form {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-size: 15px;
-    }
-    button {
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: none;
-      background: #0b5fa8;
-      color: white;
-      cursor: pointer;
-    }
-    .error {
-      color: #b91c1c;
-      font-weight: 600;
-    }
-  </style>
+<style>
+  :root{
+    --bg:#f3f4f6;
+    --card:#ffffff;
+    --border:#e5e7eb;
+    --text:#0b2740;
+    --primary:#0b5fa8;
+    --bubble-user:#d1eaff;
+    --bubble-bot:#eef2f7;
+  }
+
+  body{
+    font-family: Inter, Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 20px;
+    color: var(--text);
+  }
+
+  .wrap{
+    max-width: 720px;
+    margin: 40px auto;
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(11,39,64,0.08);
+    border: 1px solid rgba(11,39,64,0.06);
+  }
+
+  /* Header estilo WhatsApp */
+  .wa-header{
+    display:flex;
+    align-items:center;
+    padding: 12px 14px;
+    background: linear-gradient(180deg, #0b5fa8 0%, #094e8a 100%);
+    color: #fff;
+  }
+
+  .wa-left{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .wa-back{
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 22px;
+    opacity: .95;
+    user-select:none;
+  }
+
+  /* ✅ Tamaño de la foto (AJUSTA AQUÍ) */
+  .wa-avatar{
+    width: 44px;      /* <- cambia este valor si la quieres más grande/pequeña */
+    height: 44px;     /* <- y este también */
+    border-radius: 999px;
+    object-fit: cover;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    flex: 0 0 auto;
+  }
+
+  .wa-title{
+    display:flex;
+    flex-direction:column;
+    line-height: 1.1;
+    min-width: 0;
+  }
+
+  .wa-name{
+    font-weight: 700;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .wa-subtitle{
+    font-size: 12px;
+    opacity: .85;
+  }
+
+  /* Chat */
+  #messages{
+    max-height: 460px;
+    overflow-y: auto;
+    padding: 16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    background: #f7f8fa;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .msg{
+    padding: 10px 12px;
+    border-radius: 14px;
+    max-width: 82%;
+    line-height: 1.45;
+    font-size: 14.5px;
+    border: 1px solid rgba(0,0,0,0.04);
+    background: var(--bubble-bot);
+    word-wrap: break-word;
+  }
+
+  .user{
+    align-self:flex-end;
+    background: var(--bubble-user);
+    border-top-right-radius: 8px;
+  }
+
+  .bot{
+    align-self:flex-start;
+    background: var(--bubble-bot);
+    border-top-left-radius: 8px;
+  }
+
+  /* Input */
+  form{
+    display:flex;
+    gap: 10px;
+    padding: 12px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+
+  input{
+    flex: 1;
+    padding: 12px 12px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+    outline: none;
+    background: #fafafa;
+  }
+
+  input:focus{
+    border-color: rgba(11,95,168,0.55);
+    box-shadow: 0 0 0 4px rgba(11,95,168,0.10);
+    background: #fff;
+  }
+
+  button[type="submit"]{
+    padding: 12px 16px;
+    border-radius: 999px;
+    border: none;
+    background: var(--primary);
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+  }
+
+  .error{
+    color:#b91c1c;
+    font-weight:700;
+    background:#fee2e2 !important;
+    border-color: rgba(185, 28, 28, 0.15) !important;
+  }
+</style>
 </head>
 
 <body>
@@ -85,12 +185,6 @@
       <div class="wa-name">Aire · Facturación</div>
       <div class="wa-subtitle">en línea</div>
     </div>
-  </div>
-
-  <div class="wa-actions">
-    <button class="wa-icon" title="Videollamada" aria-label="Videollamada">📹</button>
-    <button class="wa-icon" title="Llamada" aria-label="Llamada">📞</button>
-    <button class="wa-icon" title="Más" aria-label="Más">⋮</button>
   </div>
 </div>
 
